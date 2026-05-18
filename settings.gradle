@@ -1,0 +1,17 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        mavenLocal()
+    }
+    plugins {
+        id "${quarkusPluginId}" version "${quarkusPluginVersion}"
+    }
+}
+includeBuild('../glow-user-service') {
+    dependencySubstitution {
+        substitute(module('com.glow:user-service'))
+            .using(project(':'))
+    }
+}
+rootProject.name='courier-service'
