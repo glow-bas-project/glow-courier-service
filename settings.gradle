@@ -8,10 +8,14 @@ pluginManagement {
         id "${quarkusPluginId}" version "${quarkusPluginVersion}"
     }
 }
-includeBuild('../glow-user-service') {
-    dependencySubstitution {
-        substitute(module('com.glow:user-service'))
-            .using(project(':'))
+def userServiceBuild = file('../glow-user-service')
+
+if (userServiceBuild.exists()) {
+    includeBuild(userServiceBuild) {
+        dependencySubstitution {
+            substitute(module('com.glow:user-service'))
+                .using(project(':'))
+        }
     }
 }
 rootProject.name='courier-service'
