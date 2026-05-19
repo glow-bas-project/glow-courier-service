@@ -9,12 +9,16 @@ repositories {
 
     def ciApiV4Url = System.getenv('CI_API_V4_URL')
     def ciJobToken = System.getenv('CI_JOB_TOKEN')
+    def userServiceProjectRef = System.getenv('USER_SERVICE_PROJECT_REF') ?: 'backend-architecture-and-scalability%2Fglow-user-service'
     if (ciApiV4Url && ciJobToken) {
         maven {
-            url = uri("${ciApiV4Url}/projects/backend-architecture-and-scalability%2Fglow-user-service/packages/maven")
-            credentials {
-                username = 'gitlab-ci-token'
-                password = ciJobToken
+            url = uri("${ciApiV4Url}/projects/${userServiceProjectRef}/packages/maven")
+            credentials(org.gradle.api.credentials.HttpHeaderCredentials) {
+                name = 'Job-Token'
+                value = ciJobToken
+            }
+            authentication {
+                header(org.gradle.authentication.http.HttpHeaderAuthentication)
             }
         }
     }

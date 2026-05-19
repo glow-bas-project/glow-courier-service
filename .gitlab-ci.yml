@@ -2,3 +2,6 @@ include:
   - project: "backend-architecture-and-scalability/glow-devops"
     ref: "ci/v1.0.3"
     file: "/.gitlab/ci/entry/service-pipeline.yml"
+
+variables:
+  USER_SERVICE_PROJECT_REF: "backend-architecture-and-scalability%2Fglow-user-service"
