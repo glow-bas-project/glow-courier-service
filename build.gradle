@@ -11,11 +11,9 @@ repositories {
     def ciApiV4Url = System.getenv('CI_API_V4_URL')
     def ciJobToken = System.getenv('CI_JOB_TOKEN')
     def userServiceProjectId = System.getenv('USER_SERVICE_PROJECT_ID')
-    def userServiceProjectPath = System.getenv('USER_SERVICE_PROJECT_PATH') ?: 'glow-user-service'
-    def userServiceProjectRef = userServiceProjectId ?: userServiceProjectPath.replaceAll('/', '%2F')
     if (ciApiV4Url && ciJobToken) {
         maven {
-            url = uri("${ciApiV4Url}/projects/${userServiceProjectRef}/packages/maven")
+            url = uri("${ciApiV4Url}/projects/${userServiceProjectId}/packages/maven")
             credentials(org.gradle.api.credentials.HttpHeaderCredentials) {
                 name = 'Job-Token'
                 value = ciJobToken
