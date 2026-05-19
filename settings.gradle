@@ -8,10 +8,10 @@ pluginManagement {
         id "${quarkusPluginId}" version "${quarkusPluginVersion}"
     }
 }
-def userServiceBuild = file('../glow-user-service')
 
-if (userServiceBuild.exists()) {
-    includeBuild(userServiceBuild) {
+def userServiceDir = file('../glow-user-service')
+if (!System.getenv('CI') && userServiceDir.exists()) {
+    includeBuild(userServiceDir) {
         dependencySubstitution {
             substitute(module('com.glow:user-service'))
                 .using(project(':'))

@@ -6,6 +6,18 @@ plugins {
 repositories {
     mavenCentral()
     mavenLocal()
+
+    def ciApiV4Url = System.getenv('CI_API_V4_URL')
+    def ciJobToken = System.getenv('CI_JOB_TOKEN')
+    if (ciApiV4Url && ciJobToken) {
+        maven {
+            url = uri("${ciApiV4Url}/projects/backend-architecture-and-scalability%2Fglow-user-service/packages/maven")
+            credentials {
+                username = 'gitlab-ci-token'
+                password = ciJobToken
+            }
+        }
+    }
 }
 
 dependencies {
