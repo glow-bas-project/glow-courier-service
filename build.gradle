@@ -10,7 +10,11 @@ repositories {
     // Add GitLab Maven build artifact for glow-user-service
     def ciApiV4Url = System.getenv('CI_API_V4_URL')
     def ciJobToken = System.getenv('CI_JOB_TOKEN')
-    def userServiceProjectId = System.getenv('USER_SERVICE_PROJECT_ID')
+    
+    def userServiceProjectId = System.getenv('USER_SERVICE_PROJECT_ID') 
+        /* Ensure this environment variable is set up in 
+        ** GitLab → glow-courier-service → Settings → CI/CD → Variables → CI/CD Variables */
+
     if (ciApiV4Url && ciJobToken) {
         maven {
             url = uri("${ciApiV4Url}/projects/${userServiceProjectId}/packages/maven")
