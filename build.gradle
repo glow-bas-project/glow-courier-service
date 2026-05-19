@@ -12,7 +12,7 @@ repositories {
     def ciJobToken = System.getenv('CI_JOB_TOKEN')
     def userServiceProjectId = System.getenv('USER_SERVICE_PROJECT_ID')
     def userServiceProjectPath = System.getenv('USER_SERVICE_PROJECT_PATH') ?: 'backend-architecture-and-scalability/glow-user-service'
-    def userServiceProjectRef = 25979
+    def userServiceProjectRef = userServiceProjectId ?: userServiceProjectPath.replaceAll('/', '%2F')
     if (ciApiV4Url && ciJobToken) {
         maven {
             url = uri("${ciApiV4Url}/projects/${userServiceProjectRef}/packages/maven")
