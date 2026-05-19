@@ -2,8 +2,3 @@ include:
   - project: "backend-architecture-and-scalability/glow-devops"
     ref: "ci/v1.0.3"
     file: "/.gitlab/ci/entry/service-pipeline.yml"
-
-variables:
-  USER_SERVICE_PROJECT_PATH: "backend-architecture-and-scalability/glow-user-service"
-  # Prefer setting this to the numeric GitLab project ID for maximum reliability.
-  USER_SERVICE_PROJECT_ID: ""
