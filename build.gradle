@@ -7,9 +7,12 @@ repositories {
     mavenCentral()
     mavenLocal()
 
+    // Add GitLab Maven build artifact for glow-user-service
     def ciApiV4Url = System.getenv('CI_API_V4_URL')
     def ciJobToken = System.getenv('CI_JOB_TOKEN')
-    def userServiceProjectRef = '25979'
+    def userServiceProjectId = System.getenv('USER_SERVICE_PROJECT_ID')
+    def userServiceProjectPath = System.getenv('USER_SERVICE_PROJECT_PATH') ?: 'backend-architecture-and-scalability/glow-user-service'
+    def userServiceProjectRef = userServiceProjectId ?: java.net.URLEncoder.encode(userServiceProjectPath, 'UTF-8')
     if (ciApiV4Url && ciJobToken) {
         maven {
             url = uri("${ciApiV4Url}/projects/${userServiceProjectRef}/packages/maven")
@@ -26,7 +29,7 @@ repositories {
 
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation 'com.glow:user-service:1.0.0-SNAPSHOT'
+    implementation 'com.glow:user-service:1.0.0-SNAPSHOT' // Dependency on glow-user-service
 
     implementation 'io.quarkus:quarkus-arc'
 
