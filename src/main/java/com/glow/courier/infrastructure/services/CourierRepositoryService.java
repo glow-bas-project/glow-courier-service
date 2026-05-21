@@ -23,4 +23,9 @@ public class CourierRepositoryService implements CourierRepository {
     public void save(CourierUser courierUser) {
         store.put(courierUser.getId(), courierUser);
     }
+
+    @Override
+    public boolean deleteById(UUID id) {
+        return store.remove(id) != null;
+    }
 }

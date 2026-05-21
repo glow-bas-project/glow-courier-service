@@ -7,14 +7,9 @@ import com.glow.courier.application.model.CourierUserDto;
 import com.glow.courier.application.services.CourierService;
 import com.glow.user.application.api.model.CreateUserRequest;
 import com.glow.user.application.api.model.UpdateUserRequest;
+
 import jakarta.annotation.security.PermitAll;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.reactive.RestResponse;
@@ -43,7 +38,7 @@ public class CourierController {
     }
 
     @GET
-    @Path("{id:[0-9a-fA-F\\-]{36}}")
+    @Path("{id}")
     public RestResponse<CourierUserDto> findById(@PathParam("id") String id) {
         return RestResponse.ok(mapper.toDto(
             courierService.findById(UUID.fromString(id))
@@ -57,16 +52,23 @@ public class CourierController {
     }
 
     @PUT
-    @Path("{id:[0-9a-fA-F\\-]{36}}")
+    @Path("{id}")
     public RestResponse<CourierUserDto> update(@PathParam("id") String id, UpdateUserRequest request) {
         var courierUser = courierService.updateCourierUser(UUID.fromString(id), request);
         return RestResponse.ok(mapper.toDto(courierUser));
     }
 
     @PUT
-    @Path("{id:[0-9a-fA-F\\-]{36}}/availability")
+    @Path("{id}/availability")
     public RestResponse<CourierAvailabilityResponse> updateAvailability(@PathParam("id") String id,
                                                                          UpdateCourierAvailabilityRequest request) {
         return RestResponse.ok(courierService.updateCourierAvailability(UUID.fromString(id), request));
+    }
+
+    @DELETE
+    @Path("{id}")
+    public RestResponse<Void> deleteById(@PathParam("id") String id) {
+        boolean deleted = courierService.deleteCourierById(UUID.fromString(id));
+        return deleted ? RestResponse.noContent() : RestResponse.status(RestResponse.Status.NOT_FOUND);
     }
 }

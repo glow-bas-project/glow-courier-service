@@ -51,6 +51,7 @@ public class CourierService {
             .permissions(permissions)
             .vehicleType(request.vehicleType())
             .courierAvailability(request.courierAvailability())
+            .courierTransferId(null)
             .stripeAccountId(null)
             .stripeOnboardingComplete(null)
             .build();
@@ -78,6 +79,7 @@ public class CourierService {
             .permissions(permissions)
             .vehicleType(request.vehicleType())
             .courierAvailability(request.courierAvailability())
+            .courierTransferId(existing.getCourierTransferId())
             .stripeAccountId(existing.getStripeAccountId())
             .stripeOnboardingComplete(existing.getStripeOnboardingComplete())
             .build();
@@ -101,11 +103,16 @@ public class CourierService {
             .permissions(existing.getPermissions())
             .vehicleType(existing.getVehicleType())
             .courierAvailability(request.courierAvailability())
+            .courierTransferId(existing.getCourierTransferId())
             .stripeAccountId(existing.getStripeAccountId())
             .stripeOnboardingComplete(existing.getStripeOnboardingComplete())
             .build();
 
         repository.save(updated);
         return new CourierAvailabilityResponse(updated.getId(), updated.getCourierAvailability());
+    }
+
+    public boolean deleteCourierById(UUID id) {
+        return repository.deleteById(id);
     }
 }

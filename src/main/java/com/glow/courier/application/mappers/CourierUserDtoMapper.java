@@ -22,6 +22,7 @@ public class CourierUserDtoMapper {
             courierUser.getPermissions(),
             courierUser.getVehicleType(),
             courierUser.getCourierAvailability(),
+            courierUser.getCourierTransferId(),
             courierUser.getStripeAccountId(),
             courierUser.getStripeOnboardingComplete());
     }

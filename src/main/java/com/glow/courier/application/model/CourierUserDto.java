@@ -14,6 +14,7 @@ public record CourierUserDto(
     List<Permission> permissions,
     VehicleType vehicleType,
     CourierAvailability courierAvailability,
+    String courierTransferId,
     String stripeAccountId,
     Boolean stripeOnboardingComplete) {
 }
