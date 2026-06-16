@@ -55,7 +55,9 @@ public class CourierServiceTest {
 		// Act
 		var response = service.updateCourierAvailability(
 			created.getId(),
-			new UpdateCourierAvailabilityRequest(CourierAvailability.AVAILABLE));
+			new UpdateCourierAvailabilityRequest(CourierAvailability.AVAILABLE),
+			keycloakSubject,
+			true);
 
 		// Assert
 		assertEquals(created.getId(), response.courierId());
@@ -91,7 +93,9 @@ public class CourierServiceTest {
 				List.of(),
 				VehicleType.CAR,
 				CourierAvailability.OFFLINE,
-				null));
+				null),
+			keycloakSubject,
+			true);
 
 		// Assert
 		assertEquals("Updated Courier", updated.getName());
